@@ -1,3 +1,5 @@
+# test file for spanner
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 # import uuid
@@ -36,3 +38,7 @@ account = Table("Account", MetaData(bind=engine), autoload=True)
 with engine.begin() as connection:
   # id = uuid.uuid4().hex[:6].lower()           -Prevents creation of monotonically increasing primary keys; unneeded for our project for now
   connection.execute(account.insert(), {"id": 1, "firstName": "Bob", "lastName": "Allison", "email": "bob@allision.edu.sg", "password": "password1", "loyaltyPoints": 1})
+
+# https://cloud.google.com/blog/topics/developers-practitioners/google-cloud-spanner-dialect-sqlalchemy
+# https://cloud.google.com/sql/docs/sqlserver/create-manage-databases
+# https://cloud.google.com/spanner/docs/quickstart-console#googlesql
