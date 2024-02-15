@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `firstName`, `lastName`, `email`, `password`, `loyaltyPoints`) VALUES
-(1, 'damon', 'da', 'mon', 'monda@damon.com', 'test', 1),
+(1, 'damon', 'da', 'mon', 'monda@damon.com', 'test', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

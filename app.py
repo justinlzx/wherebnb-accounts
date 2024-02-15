@@ -11,19 +11,26 @@ db = SQLAlchemy(app)
 class Account(db.Model):
     __tablename__ = 'account'
 
-    isbn13 = db.Column(db.String(13), primary_key=True)
-    title = db.Column(db.String(64), nullable=False)
-    price = db.Column(db.Float(precision=2), nullable=False)
-    availability = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False)
+    firstName = db.Column(db.String(20), nullable=False)
+    lastName = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    loyaltyPoints = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, isbn13, title, price, availability):
-        self.isbn13 = isbn13
-        self.title = title
-        self.price = price
-        self.availability = availability
+    def __init__(self, id, username, firstName, lastName, email, password, loyaltyPoints):
+        self.id = id
+        self.username = username
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.password = password
+        self.loyaltyPoints = loyaltyPoints
 
     def json(self):
-        return {"isbn13": self.isbn13, "title": self.title, "price": self.price, "availability": self.availability}
+        return {"id": self.id, "username": self.username, "firstName": self.firstName, "lastName": self.lastName,
+                "email": self.email, "password": self.password, "loyaltyPoints": self.loyaltyPoints}
 
 
 
