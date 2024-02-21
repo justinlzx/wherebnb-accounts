@@ -10,7 +10,7 @@ app = Flask(__name__)
  
 # Google Cloud SQL (change this accordingly)
 
-PASSWORD ="your database password"
+PASSWORD ="wherebnb"
 PUBLIC_IP_ADDRESS ="34.173.224.187"
 DBNAME ="test"
 PROJECT_ID ="useful-memory-414316"
@@ -20,7 +20,7 @@ INSTANCE_NAME ="wherebnb-dev-db"
 
 app.config["SECRET_KEY"] = "yoursecretkey"
 
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
+app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
 
