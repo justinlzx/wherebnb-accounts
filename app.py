@@ -1,9 +1,8 @@
 # imports
-
 from flask import Flask, request, make_response
-
 from flask_sqlalchemy import SQLAlchemy
  
+# Postman test input: localhost:5000/view
 # initializing Flask app
 
 app = Flask(__name__)
