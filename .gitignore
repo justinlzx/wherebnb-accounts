@@ -1,3 +1,5 @@
+# dotenv environment variables file
 .env
-/account.sql
-/spanner_db.py
+.env.test
+
+
