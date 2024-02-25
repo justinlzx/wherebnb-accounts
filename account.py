@@ -30,8 +30,13 @@ class Accounts(db.Model):
     lastName = db.Column(db.String(20), nullable = False)
     email = db.Column(db.String(255), nullable = False, unique = True)
     loyaltyPoints = db.Column(db.Integer, nullable = False)
-    # to be hashed later
-    password = db.Column(db.String(255), nullable = False)
+    password = db.Column(db.String(255), nullable = False)      # to be hashed later
+    cardNo = db.Column(db.Integer, nullable = False)
+    cardName = db.Column(db.String(255), nullable = False)
+    cardIssueDate = db.Column(db.Date, nullable = False)
+    cardExpiryDate = db.Column(db.Date, nullable = False)
+    cardCVV = db.Column(db.Integer, nullable = False)
+    userType = db.Column(db.Integer, nullable = False)
 
 # To test/add functionality later
 @app.route('/add', methods =['POST'])
@@ -44,6 +49,12 @@ def add():
     email = request.form.get('email')
     loyaltyPoints = request.form.get('loyaltyPoints')
     password = request.form.get('password')
+    cardNo = request.form.get('cardNo')
+    cardName = request.form.get('cardName')
+    cardIssueDate = request.form.get('cardIssueDate')
+    cardExpiryDate = request.form.get('cardExpiryDate')
+    cardCVV = request.form.get('cardCVV')
+    userType = request.form.get('userType')
 
     # checking if account already exists
     account = Accounts.query.filter_by(id = id).first()
@@ -57,7 +68,13 @@ def add():
                 lastName = lastName,
                 email = email,
                 loyaltyPoints = loyaltyPoints,
-                password = password
+                password = password,
+                cardNo = cardNo,
+                cardName = cardName,
+                cardIssueDate = cardIssueDate,
+                cardExpiryDate = cardExpiryDate,
+                cardCVV = cardCVV,
+                userType = userType
             )
 
             # adding the fields to accounts table
@@ -88,52 +105,6 @@ def add():
         }
  
         return make_response(responseObject, 403)
-    """
-    if (db.session.scalars(
-      db.select(Accounts).filter_by(id=id).
-      limit(1)
-      ).first()
-      ):
-        return jsonify(
-            {
-                "code": 400,
-                "data": {
-                    "id": id
-                },
-                "message": "Account already exists."
-            }
-        ), 400
-
-    data = request.get_json()
-    account = Accounts(id, **data)
-        "id": 1,
-        "username": "Alpha",
-        "firstName": "Testing",
-        "lastName": "OneTwoThree",
-        "email": "betacharlie@delta.com",
-        "loyaltyPoints": 0,
-        "password": "wordpass"
-    try:
-        db.session.add(account)
-        db.session.commit()
-    except:
-        return jsonify(
-            {
-                "code": 500,
-                "data": {
-                    "id": id
-                },
-                "message": "An error occurred creating the account."
-            }
-        ), 500
-
-    return jsonify(
-        {
-            "code": 201,
-            "data": account.json()
-        }
-    ), 201
-    """
 
 @app.route('/view')
 def view():
@@ -149,7 +120,13 @@ def view():
             "lastName" : account.lastName,
             "email" : account.email,
             "loyaltyPoints" : account.loyaltyPoints,
-            "password" : account.password
+            "password" : account.password,
+            "cardNo" : account.cardNo,
+            "cardName" : account.cardName,
+            "cardIssueDate" : account.cardIssueDate,
+            "cardExpiryDate" : account.cardExpiryDate,
+            "cardCVV" : account.cardCVV,
+            "userType" : account.userType
         })
  
     return make_response({
