@@ -1,14 +1,17 @@
 from flask import Flask, request, make_response, jsonify
 from flask_sqlalchemy import SQLAlchemy
- 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 app = Flask(__name__)
  
-# Google Cloud SQL (to be stored in .env file later)
-PASSWORD ="wherebnb"
-PUBLIC_IP_ADDRESS ="34.173.224.187"
-DBNAME ="account"
-PROJECT_ID ="useful-memory-414316"
-INSTANCE_NAME ="wherebnb-dev-db"
+# Google Cloud SQL CONFIG
+PASSWORD = os.getenv("PASSWORD")
+PUBLIC_IP_ADDRESS = os.getenv("PUBLIC_IP_ADDRESS")
+DBNAME = os.getenv("DBNAME")
+PROJECT_ID = os.getenv("PROJECT_ID")
+INSTANCE_NAME = os.getenv("INSTANCE_NAME")
  
 # Configuration
 app.config["SECRET_KEY"] = "yoursecretkey"
