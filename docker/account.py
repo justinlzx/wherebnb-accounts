@@ -2,6 +2,7 @@ from flask import Flask, request, make_response, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
+from os import environ
 
 load_dotenv()
 app = Flask(__name__)
@@ -15,7 +16,7 @@ INSTANCE_NAME = os.getenv("INSTANCE_NAME")
  
 # Configuration
 app.config["SECRET_KEY"] = "yoursecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
+app.config["SQLALCHEMY_DATABASE_URI"]= environ.get("dbURL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= False
 
 app.app_context().push()
@@ -134,6 +135,5 @@ def view():
         'message': response
     }, 200)
 
-if __name__ == "__main__":
-    # serving the app directly
-    app.run()
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

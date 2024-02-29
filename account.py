@@ -33,10 +33,10 @@ class Accounts(db.Model):
     password = db.Column(db.String(255), nullable = False)      # to be hashed later
     cardNo = db.Column(db.Integer, nullable = False)
     cardName = db.Column(db.String(255), nullable = False)
-    cardIssueDate = db.Column(db.Date, nullable = False)
-    cardExpiryDate = db.Column(db.Date, nullable = False)
-    cardCVV = db.Column(db.Integer, nullable = False)
-    userType = db.Column(db.Integer, nullable = False)
+    cardIssueDate = db.Column(db.Date, nullable = False)        # to be hashed later
+    cardExpiryDate = db.Column(db.Date, nullable = False)       # to be hashed later
+    cardCVV = db.Column(db.Integer, nullable = False)           # to be hashed later
+    userType = db.Column(db.Integer, nullable = False)          # 1 = Guest, 2 = Owner
 
 # To test/add functionality later
 @app.route('/add', methods =['POST'])
@@ -92,7 +92,7 @@ def add():
         except:
             responseObject = {
                 'status' : 'fail',
-                'message': 'Some error occurred !!'
+                'message': 'Some error occurred !!'     # Prepare individual error messages
             }
  
             return make_response(responseObject, 400)
@@ -106,7 +106,7 @@ def add():
  
         return make_response(responseObject, 403)
 
-@app.route('/view')
+@app.route('/view_all')
 def view():
     # fetches all the accounts
     accounts = Accounts.query.all()
@@ -133,7 +133,40 @@ def view():
         'status' : 'success',
         'message': response
     }, 200)
+
+@app.route('/view')
+def view():
+    id = request.form.get('id')
+    account = Accounts.query.filter_by(id = id).first()
+
+    if not account:
+        responseObject = {
+                'status' : 'fail',
+                'message': 'User not found!'
+            }
+        return make_response(responseObject, 400)
+        
+    response = list()
+    response.append({
+        "id" : account.id,
+        "username" : account.username,
+        "firstName" : account.firstName,
+        "lastName" : account.lastName,
+        "email" : account.email,
+        "loyaltyPoints" : account.loyaltyPoints,
+        "password" : account.password,
+        "cardNo" : account.cardNo,
+        "cardName" : account.cardName,
+        "cardIssueDate" : account.cardIssueDate,
+        "cardExpiryDate" : account.cardExpiryDate,
+        "cardCVV" : account.cardCVV,
+        "userType" : account.userType
+    })
  
+    return make_response({
+        'status' : 'success',
+        'message': response
+    }, 200)
 
 if __name__ == "__main__":
     # serving the app directly
