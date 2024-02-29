@@ -107,7 +107,7 @@ def add():
         return make_response(responseObject, 403)
 
 @app.route('/view_all')
-def view():
+def view_all():
     # fetches all the accounts
     accounts = Accounts.query.all()
     # response list consisting user details
