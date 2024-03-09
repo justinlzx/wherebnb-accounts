@@ -30,13 +30,7 @@ class Accounts(db.Model):
     firstName = db.Column(db.String(20), nullable = False)
     lastName = db.Column(db.String(20), nullable = False)
     email = db.Column(db.String(255), nullable = False, unique = True)
-    loyaltyPoints = db.Column(db.Integer, nullable = False)
     password = db.Column(db.String(255), nullable = False)      # to be hashed later
-    cardNo = db.Column(db.Integer, nullable = False)
-    cardName = db.Column(db.String(255), nullable = False)
-    cardIssueDate = db.Column(db.Date, nullable = False)
-    cardExpiryDate = db.Column(db.Date, nullable = False)
-    cardCVV = db.Column(db.Integer, nullable = False)
     userType = db.Column(db.Integer, nullable = False)
 
 # To test/add functionality later
@@ -48,13 +42,7 @@ def add():
     firstName = request.form.get('firstName')
     lastName = request.form.get('lastName')
     email = request.form.get('email')
-    loyaltyPoints = request.form.get('loyaltyPoints')
     password = request.form.get('password')
-    cardNo = request.form.get('cardNo')
-    cardName = request.form.get('cardName')
-    cardIssueDate = request.form.get('cardIssueDate')
-    cardExpiryDate = request.form.get('cardExpiryDate')
-    cardCVV = request.form.get('cardCVV')
     userType = request.form.get('userType')
 
     # checking if account already exists
@@ -68,13 +56,7 @@ def add():
                 firstName = firstName,
                 lastName = lastName,
                 email = email,
-                loyaltyPoints = loyaltyPoints,
                 password = password,
-                cardNo = cardNo,
-                cardName = cardName,
-                cardIssueDate = cardIssueDate,
-                cardExpiryDate = cardExpiryDate,
-                cardCVV = cardCVV,
                 userType = userType
             )
 
@@ -120,13 +102,7 @@ def view():
             "firstName" : account.firstName,
             "lastName" : account.lastName,
             "email" : account.email,
-            "loyaltyPoints" : account.loyaltyPoints,
             "password" : account.password,
-            "cardNo" : account.cardNo,
-            "cardName" : account.cardName,
-            "cardIssueDate" : account.cardIssueDate,
-            "cardExpiryDate" : account.cardExpiryDate,
-            "cardCVV" : account.cardCVV,
             "userType" : account.userType
         })
  
