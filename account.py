@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
+
+DEBUG=os.getenv("DEBUG")
+PORT=os.getenv("NODE_PORT")
  
 # Google Cloud SQL CONFIG
 PASSWORD = os.getenv("PASSWORD")
@@ -110,9 +113,8 @@ def view_all():
         'message': response
     }, 200)
 
-@app.route('/view')
-def view():
-    id = request.form.get('id')
+@app.route('/view/<id>')
+def view(id):
     account = Accounts.query.filter_by(id = id).first()
 
     if not account:
@@ -140,4 +142,4 @@ def view():
 
 if __name__ == "__main__":
     # serving the app directly
-    app.run()
+    app.run(port=PORT, debug=DEBUG)
