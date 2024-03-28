@@ -110,7 +110,7 @@ def view_all():
  
     return make_response({
         'status' : 'success',
-        'message': response
+        'data': response
     }, 200)
 
 @app.route('/view/<id>')
@@ -124,8 +124,7 @@ def view(id):
             }
         return make_response(responseObject, 400)
         
-    response = list()
-    response.append({
+    response = {
         "id" : account.id,
         "username" : account.username,
         "firstName" : account.firstName,
@@ -133,11 +132,11 @@ def view(id):
         "email" : account.email,
         "password" : account.password,
         "userType" : account.userType
-    })
+    }
  
     return make_response({
         'status' : 'success',
-        'message': response
+        'data': response
     }, 200)
 
 if __name__ == "__main__":
