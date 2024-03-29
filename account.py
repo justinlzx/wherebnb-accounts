@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
+
+DEBUG=os.getenv("DEBUG")
+PORT=os.getenv("NODE_PORT")
  
 # Google Cloud SQL CONFIG
 PASSWORD = os.getenv("PASSWORD")
@@ -106,12 +109,11 @@ def view_all():
  
     return make_response({
         'status' : 'success',
-        'message': response
+        'data': response
     }, 200)
 
-@app.route('/view')
-def view():
-    id = request.form.get('id')
+@app.route('/view/<id>')
+def view(id):
     account = Accounts.query.filter_by(id = id).first()
 
     if not account:
@@ -121,8 +123,7 @@ def view():
             }
         return make_response(responseObject, 400)
         
-    response = list()
-    response.append({
+    response = {
         "id" : account.id,
         "username" : account.username,
         "firstName" : account.firstName,
@@ -130,16 +131,16 @@ def view():
         "email" : account.email,
         "password" : account.password,
         "userType" : account.userType
-    })
+    }
  
     return make_response({
         'status' : 'success',
-        'message': response
+        'data': response
     }, 200)
 
 if __name__ == "__main__":
     # serving the app directly
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
 
 # docker build -t damonwong2022148/account:1.0 ./
 # docker run -p 5000:5000 -e dbURL=mysql+mysqldb://root:wherebnb@34.173.224.187/accounts?unix_socket=/cloudsql/useful-memory-414316:wherebnb-dev-db damonwong2022148/account:1.0
