@@ -37,7 +37,6 @@ class Accounts(db.Model):
 
 @app.route('/add', methods =['POST'])
 def add():
-    # getting name and email
     id = request.form.get('id')
     username = request.form.get('username')
     firstName = request.form.get('firstName')
@@ -94,7 +93,7 @@ def add():
 def view_all():
     # fetches all the accounts
     accounts = Accounts.query.all()
-    # response list consisting user details
+
     response = list()
     for account in accounts:
         response.append({
@@ -139,7 +138,6 @@ def view(id):
     }, 200)
 
 if __name__ == "__main__":
-    # serving the app directly
     app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
 
 # docker build -t damonwong2022148/account:1.0 ./
