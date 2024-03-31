@@ -1,4 +1,11 @@
 FROM python:3-slim
+
+ARG PASSWORD
+ARG PUBLIC_IP_ADDRESS
+ARG DBNAME 
+ARG PROJECT_ID 
+ARG INSTANCE_NAME
+
 RUN apt-get update \
     && apt-get install -y libmariadb-dev-compat pkg-config build-essential \
     && rm -rf /var/lib/apt/lists/*
