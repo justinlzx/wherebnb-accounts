@@ -16,9 +16,9 @@ DBNAME = os.getenv("DBNAME")
 PROJECT_ID = os.getenv("PROJECT_ID")
 INSTANCE_NAME = os.getenv("INSTANCE_NAME")
  
-# Configuration - Hardcoded credentials so Docker image will run properly
+
 app.config["SECRET_KEY"] = "yoursecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:wherebnb@34.173.224.187/accounts?unix_socket=/cloudsql/useful-memory-414316:wherebnb-dev-db"
+app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket=/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
 
 app.app_context().push()
@@ -32,7 +32,7 @@ class Accounts(db.Model):
     firstName = db.Column(db.String(20), nullable = False)
     lastName = db.Column(db.String(20), nullable = False)
     email = db.Column(db.String(255), nullable = False, unique = True)
-    password = db.Column(db.String(255), nullable = False)      # to be hashed later
+    password = db.Column(db.String(255), nullable = False)      
     userType = db.Column(db.Integer, nullable = False)          # 1 = Guest, 2 = Owner
 
 @app.route('/add', methods =['POST'])
@@ -140,5 +140,3 @@ def view(id):
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=PORT, debug=DEBUG)
 
-# docker build -t damonwong2022148/account:1.0 ./
-# docker run -p 5000:5000 -e dbURL=mysql+mysqldb://root:wherebnb@34.173.224.187/accounts?unix_socket=/cloudsql/useful-memory-414316:wherebnb-dev-db damonwong2022148/account:1.0
