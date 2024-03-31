@@ -1,2 +1,9 @@
-app.py
-.env
+__pycache__
+*.pyc
+venv/
+env/
+tests/
+*.log
+config/local_config.py
+secrets/
+.git
